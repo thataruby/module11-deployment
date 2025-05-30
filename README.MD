@@ -21,7 +21,7 @@ I tried opening the service multiple times, and with each refresh, more GET / lo
 The -n flag is used to specify the namespace. Without it, kubectl shows resources only in the current or default namespace.
 
 
-## Hello Minikube
+## Rolling & Kubernetes Manifest File
 >  What is the difference between Rolling Update and Recreate deployment strategy?
  
 - Rolling Update = updates pods gradually, ensuring that some pods of the old version are still available while the new ones start running. This minimizes downtime and keeps the service accessible during updates.
@@ -47,3 +47,20 @@ Available on the repository as 'deployment-recreate.yaml'
 > What do you think are the benefits of using Kubernetes manifest files?
  
 Kubernetes manifest files make deployments more consistent, reproducible, and easier to manage. Instead of manually typing commands, I can apply changes reliably using kubectl apply -f, which reduces the chance of errors. They're also easier to track with version control and integrate into automation tools, making the deployment process smoother and more efficient.
+
+> BONUS: Deploy on a Managed Kubernetes Cluster (Google Cloud Platform - GKE)
+
+![GKE](images/gke.png)
+Firstly, I created an account on Google Cloud Platform and created a new a project 'spring-petclinic-project'.
+
+![Cluster](images/cluster.png)
+I then set up the Google Cloud SDK, selected my project, created the GKE cluster, then connected kubectl to GKE.
+
+![Deploy](images/deploy.png)
+Next, I used the same deployment.yaml file as in the Minikube setup to deploy it.
+
+![Expose](images/expose.png)
+![Expose 2](images/expose2.png)
+Lastly, I exposed the app: http://34.126.167.250/petclinic
+
+Reflection: Using GKE took more time to set up compared to Minikube because I had to create the cluster and configure everything on Google Cloud. However, GKE made it easier to scale and access the app publicly using a LoadBalancer. The kubectl commands were the same in both environments once I connected to the GKE cluster, which was convenient. I also noticed that I didn’t have to worry about managing the master nodes on GKE, unlike Minikube where everything runs locally. While Minikube was faster and free to use, GKE felt more like a real production environment, but the downside is that it comes with usage costs after my free trial ends.
