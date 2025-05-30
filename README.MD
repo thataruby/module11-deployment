@@ -20,3 +20,30 @@ I tried opening the service multiple times, and with each refresh, more GET / lo
  
 The -n flag is used to specify the namespace. Without it, kubectl shows resources only in the current or default namespace.
 
+
+## Hello Minikube
+>  What is the difference between Rolling Update and Recreate deployment strategy?
+ 
+- Rolling Update = updates pods gradually, ensuring that some pods of the old version are still available while the new ones start running. This minimizes downtime and keeps the service accessible during updates.
+- Recreate = terminates all existing pods first, then starts new ones. This may cause temporary downtime but it's simpler and may be used when old and new versions can’t run side by side.
+
+> Try deploying the Spring Petclinic REST using Recreate deployment strategy and document your attempt.
+ 
+I modified the deployment YAML by changing the strategy type to:
+```
+yaml
+Copy
+Edit
+strategy:
+  type: Recreate
+```
+![Recreate](images/recreate.png)
+After applying the updated manifest with kubectl apply -f deployment.yaml, I observed in kubectl get pods that all previous pods were terminated before the new ones started, showing the behavior of the Recreate strategy.
+
+> Prepare different manifest files for executing Recreate deployment strategy.
+ 
+Available on the repository as 'deployment-recreate.yaml'
+
+> What do you think are the benefits of using Kubernetes manifest files?
+ 
+Kubernetes manifest files make deployments more consistent, reproducible, and easier to manage. Instead of manually typing commands, I can apply changes reliably using kubectl apply -f, which reduces the chance of errors. They're also easier to track with version control and integrate into automation tools, making the deployment process smoother and more efficient.
